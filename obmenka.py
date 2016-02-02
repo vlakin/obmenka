@@ -76,7 +76,7 @@ class ObmenkaStatusBarApp(rumps.App):
             else:
                 self.title = rate
 
-    @rumps.timer(600)
+    @rumps.timer(86400)
     def check_updates(self,_):
         try:
             latest_version = urllib2.urlopen('http://vlak.us/~vlak/obmenka/latest-version').read()
