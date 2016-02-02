@@ -8,7 +8,7 @@ import webbrowser
 
 from rumps import *
 
-rumps.debug_mode(True)
+#rumps.debug_mode(True)
 
 with open('config.json') as config_file:    
     config = json.load(config_file)
