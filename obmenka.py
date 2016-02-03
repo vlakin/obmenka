@@ -8,7 +8,7 @@ import webbrowser
 
 from rumps import *
 
-#rumps.debug_mode(True)
+rumps.debug_mode(True)
 
 with open('config.json') as config_file:    
     config = json.load(config_file)
@@ -62,7 +62,7 @@ class ObmenkaStatusBarApp(rumps.App):
             c = json.load(f)
         except Exception as e:
             print e
-            if type(last_rate) == str:
+            if str(last_rate) != 'None':
                 self.title = last_rate + "**"
         else:
             global rate
@@ -116,7 +116,8 @@ class ObmenkaStatusBarApp(rumps.App):
             'Если курс изменился, то он будет окружен зведочками - *курс*\n'+
             'Если курс не удалось получить, то он будет показан так: последний курс**\n'+
             'По умолчанию, город - Харьков, валюта - USD-UAH\n'+
-            'Конфигурацию можно изменить в файле config.json\n'
+            'Конфигурацию можно изменить в файле config.json\n'+
+            'Исходный код: https://github.com/vlakin/obmenka'
             ) 
         rumps.alert(message=description, title='Obmenka Status Bar v.'+version)
 
