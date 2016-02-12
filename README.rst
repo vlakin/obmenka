@@ -1,5 +1,5 @@
 # obmenka
-Macos status bar which monitor currency exchange rates on obmenka.kharkov.ua and kiev.obmenka.ua sites 
+Macos status bar which monitors currency exchange rates on obmenka.kharkov.ua and kiev.obmenka.ua sites 
 
 .. image:: https://raw.github.com/vlakin/obmenka/master/statusbarscreenshot.png
 
