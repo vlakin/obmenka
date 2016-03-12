@@ -1,5 +1,5 @@
 # obmenka
-Macos status bar which monitors currency exchange rates on obmenka.kharkov.ua and kiev.obmenka.ua sites 
+MacOS status bar which monitors currency exchange rates on obmenka.kharkov.ua and kiev.obmenka.ua sites 
 
 .. image:: https://raw.github.com/vlakin/obmenka/master/statusbarscreenshot.png
 
@@ -17,6 +17,5 @@ System Prefences -> User & groups -> Login Items и добавьте прило�
 .. image:: https://raw.github.com/vlakin/obmenka/master/autostart.png
 
 По умолчанию в настройках стоит город Харьков и валюта для мониторинга USD-UAH. Если есть необходимость
-изменить эти параметры - они хранятся в файле /Applications/Obmenka.app/Contents/Resources/config.json 
-Там же можно отключить уведомления об изменении курса.
+сменить основную валюту - это можно сделать в конфигурационном файле. Остальные настройки меняются в меню.
 

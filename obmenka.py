@@ -169,10 +169,13 @@ def notify_onoff(self, sender):
 
 @rumps.clicked("Звук")
 def sound_onoff(self, sender):
-    global sound
-    sound = not sound
-    sender.state = sound
-    config_save()
+    if notify:
+        global sound
+        sound = not sound
+        sender.state = sound
+        config_save()
+    else:
+        sound_button.set_callback(None)
 
 @rumps.clicked("О программе")
 def about(sender, _):
