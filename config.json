@@ -1,6 +1,6 @@
 {
-	"city":"Харьков",
-	"currency":"usd_uah",
-	"notify":"True",
-        "sound":"True"
+    "sound": true, 
+    "city": "\u0425\u0430\u0440\u044c\u043a\u043e\u0432", 
+    "notify": true, 
+    "currency": "usd_uah"
 }

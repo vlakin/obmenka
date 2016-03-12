@@ -13,9 +13,11 @@ from rumps import *
 with open('config.json') as config_file:    
     config = json.load(config_file)
 
-version = '0.1.1'
+version = '0.1.2'
 city = config['city']
 currency = config['currency']
+notify = config['notify']
+sound = config['sound']
 kharkov_rates = 'https://kharkov.obmenka.ua/get_rates'
 kharkov_url = 'https://obmenka.kharkov.ua'
 kiev_rates = 'https://kiev.obmenka.ua/get_rates'
@@ -45,7 +47,7 @@ def currency_rates(sender,_):
 
 @rumps.clicked("Электронные валюты")
 def open_dcr_site(_):
-    dcr_url = 'https://changeinfo.ru'
+    dcr_url = 'https://obmenka.ua/referral/42dc3ed015ea'
     webbrowser.open_new_tab(dcr_url)
 
 
@@ -151,28 +153,44 @@ def default_city(sender):
     city_button.title = city
     update_rates(app,city)
 
+@rumps.clicked("Уведомления")
+def notify_onoff(self, sender):
+    global notify
+    notify = not notify
+    sender.state = notify
+    if not notify:
+        sound_button.set_callback(None)
+    else:
+        sound_button.set_callback(sound_onoff)
+
+@rumps.clicked("Звук")
+def sound_onoff(self, sender):
+    global sound
+    sound = not sound
+    sender.state = sound
+
 @rumps.clicked("О программе")
 def about(sender, _):
     description = ('Программа показывает курсы в статус баре.\n'+
         'Обновление курсов происходит раз в минуту.\n'+
-        'Если курс изменился, то он будет окружен зведочками - *курс*\n'+
-        'Если курс не удалось получить, то он будет показан так: последний курс**\n'+
-        'По умолчанию, город - Харьков, валюта - USD-UAH\n'+
-        'Конфигурацию можно изменить в файле config.json\n'+
-        'Исходный код: https://github.com/vlakin/obmenka'
+        'Если курс изменился, то он будет окружен зведочками - *курс*.\n'+
+        'Если курс не удалось получить, то он будет показан так: последний курс**.\n'+
+        'Курсы НБУ и Межбанка обновляются раз в час.\n'+
+        'По умолчанию, город - Харьков, валюта - USD-UAH\n'
         ) 
     rumps.alert(message=description, title='Obmenka Status Bar v.'+version)
 
 @rumps.clicked('Выход')
-def clean_up_before_quit(_):
-    #print 'execute clean up code'
+def save_config_and_quit(_):
+    with open("config.json", "w") as config_file:
+        json.dump({'city':city, 'currency':currency, 'notify':notify, 'sound':sound}, config_file, indent=4)
     rumps.quit_application()
 
 #@rumps.clicked('Test') #fixed bug in rumps lib https://github.com/jaredks/rumps/issues/26
 def rate_changed(sender):
-    if config['notify']:
+    if notify:
         notification_text = "Был: " + str(last_rate) + " стал: " + str(rate)
-        rumps.notification("Obmenka", "Изменение курса!", notification_text, sound=config['sound'])
+        rumps.notification("Obmenka", "Изменение курса!", notification_text, sound=sound)
 
 
 if __name__ == "__main__":
@@ -186,6 +204,9 @@ if __name__ == "__main__":
             ['USD-UAH','EUR-UAH','RUB-UAH']},
         None,  # None functions as a separator in your menu
         city,
+        #rumps.MenuItem('Уведомления', key="N"),
+        'Уведомления',
+        'Звук',
         None,
         'О программе',
         None
@@ -203,5 +224,9 @@ if __name__ == "__main__":
     mb_rub = app.menu['Межбанк']['RUB-UAH']
  
     city_button = app.menu[city]
+    notify_button = app.menu['Уведомления']
+    notify_button.state = notify
+    sound_button = app.menu['Звук']
+    sound_button.state = sound
     # -----------------------------------------
     app.run()
