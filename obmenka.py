@@ -30,7 +30,9 @@ else:
     obm_url = kharkov_url
 last_rate = None
 
-
+def config_save():
+    with open("config.json", "w") as config_file:
+        json.dump({'city':city, 'currency':currency, 'notify':notify, 'sound':sound}, config_file, indent=4)
 
 @rumps.clicked('Курсы валют')
 def currency_rates(sender,_):
@@ -152,6 +154,7 @@ def default_city(sender):
         obm_url = kharkov_url
     city_button.title = city
     update_rates(app,city)
+    config_save()
 
 @rumps.clicked("Уведомления")
 def notify_onoff(self, sender):
@@ -162,12 +165,14 @@ def notify_onoff(self, sender):
         sound_button.set_callback(None)
     else:
         sound_button.set_callback(sound_onoff)
+    config_save()
 
 @rumps.clicked("Звук")
 def sound_onoff(self, sender):
     global sound
     sound = not sound
     sender.state = sound
+    config_save()
 
 @rumps.clicked("О программе")
 def about(sender, _):
@@ -182,8 +187,7 @@ def about(sender, _):
 
 @rumps.clicked('Выход')
 def save_config_and_quit(_):
-    with open("config.json", "w") as config_file:
-        json.dump({'city':city, 'currency':currency, 'notify':notify, 'sound':sound}, config_file, indent=4)
+    config_save()
     rumps.quit_application()
 
 #@rumps.clicked('Test') #fixed bug in rumps lib https://github.com/jaredks/rumps/issues/26
