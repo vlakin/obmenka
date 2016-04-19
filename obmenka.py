@@ -13,14 +13,14 @@ from rumps import *
 with open('config.json') as config_file:    
     config = json.load(config_file)
 
-version = '0.1.2'
+version = '0.1.3'
 city = config['city']
 currency = config['currency']
 notify = config['notify']
 sound = config['sound']
-kharkov_rates = 'https://kharkov.obmenka.ua/get_rates'
+kharkov_rates = 'http://kharkov.obmenka.ua/get_rates'
 kharkov_url = 'https://obmenka.kharkov.ua'
-kiev_rates = 'https://kiev.obmenka.ua/get_rates'
+kiev_rates = 'http://kiev.obmenka.ua/get_rates'
 kiev_url = 'https://kiev.obmenka.ua'
 if city == 'Киев':
     rates_url = kiev_rates
