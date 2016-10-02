@@ -13,8 +13,8 @@ OPTIONS = {
         'CFBundleDisplayName': APP_NAME,
         'CFBundleGetInfoString': "Obmenka Status Bar",
         'CFBundleIdentifier': "com.metachris.osx.obmenka",
-        'CFBundleVersion': "0.1.3",
-        'CFBundleShortVersionString': "0.1.3",
+        'CFBundleVersion': "0.1.4",
+        'CFBundleShortVersionString': "0.1.4",
         'NSHumanReadableCopyright': u"Copyright © 2016, Vlak"
     },
     'packages': ['rumps'],

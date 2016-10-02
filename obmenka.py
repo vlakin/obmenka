@@ -13,7 +13,7 @@ from rumps import *
 with open('config.json') as config_file:    
     config = json.load(config_file)
 
-version = '0.1.3'
+version = '0.1.4'
 city = config['city']
 currency = config['currency']
 notify = config['notify']
@@ -62,10 +62,10 @@ def open_nbu_site(_):
 @rumps.timer(3600)
 def update_bank_rates(sender):
     bank_rates_url = 'http://openrates.in.ua/rates'
-    req = urllib2.Request(bank_rates_url, None, {'user-agent':'macos/toolbar'})
+    req = urllib2.Request(bank_rates_url, None, {'user-agent':'macos/toolbar.v.'+version})
     opener = urllib2.build_opener()
     try:
-        f = opener.open(req)
+        f = opener.open(req,timeout=4)
         global br
         br = json.load(f) #loading bank rates from json file 
     except Exception as e:
@@ -87,7 +87,7 @@ def update_rates(sender,_):
     opener = urllib2.build_opener()
 
     try:
-        f = opener.open(req)
+        f = opener.open(req,timeout=4)
         global c
         c = json.load(f) #trying to fetch obmenka's rates to json 
     except Exception as e:
@@ -124,7 +124,7 @@ def update_rates(sender,_):
 @rumps.timer(259200) # once per 3 days
 def check_updates(sender,_):
     try:
-        latest_version = urllib2.urlopen('http://vlak.us/~vlak/obmenka/latest-version').read()
+        latest_version = urllib2.urlopen('http://vlak.us/~vlak/obmenka/latest-version', timeout = 10).read()
     except Exception as e:
         print e
     else:
